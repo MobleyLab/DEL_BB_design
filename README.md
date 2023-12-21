@@ -1,5 +1,4 @@
 # DEL_BB_design
-[![DOI](https://zenodo.org/badge/594168758.svg)](https://zenodo.org/badge/latestdoi/594168758)
 
 ### Organization
 #### Overall layout
