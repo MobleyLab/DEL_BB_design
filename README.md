@@ -6,7 +6,7 @@ Associated code and files for different procedures are separated into distinct d
 
 #### Manifest:
 - `files`: all associated files for complete reproduction of the work
-- `scripts`: all code necessary for analysis
+- `code`: all code necessary for analysis
 - `figures`: directory containing unedited image files for all figures in the main text and supporting information
 
 ### Requirements

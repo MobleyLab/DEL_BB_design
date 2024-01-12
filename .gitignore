@@ -1,0 +1,2 @@
+# File formats to ignore
+__pycache__/

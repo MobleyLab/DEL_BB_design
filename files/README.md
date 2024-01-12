@@ -1,6 +1,12 @@
 # files
 
 ## What's here:
+- `pamine_df.csv`: cleaned file with strictly primary amines and truncates for each BB
+- `pAA_df.csv`: cleaned file with strictly primary amino acids and truncates for each BB
+- `cooh_df.csv`: cleaned file with strictly carboxylic acids and truncates for each BB
+- `all_truncates.csv`: file with concatenated list of unique truncates across all BB sets
+- `truncates_UMAP.csv`: file with UMAP coordinates for each unique truncate
+
 #### stock_files
 - `pamine_stock.sdf`: catalog file of amine building blocks sourced from Enamine
 - `AA_stock.sdf`: catalog file of amino acid building blocks sourced from Enamine
@@ -9,13 +15,6 @@
 - `pamine_w_truncates.sdf`: catalog file with truncated versions of strictly primary amine building blocks
 - `pAA_w_truncates.sdf`: catalog file with truncated versions of strictly primary amino acid building blocks
 - `cooh_w_truncates.sdf`: catalog file with truncated versions of carboxylic acid building blocks
-
-#### cleaned_files
-- `pamine_df.csv`: cleaned file with strictly primary amines and truncates for each BB
-- `pAA_df.csv`: cleaned file with strictly primary amino acids and truncates for each BB
-- `cooh_df.csv`: cleaned file with strictly carboxylic acids and truncates for each BB 
-- `all_truncates.csv`: file with concatenated list of unique truncates across all BB sets
-- `truncates_UMAP.csv`: file with UMAP coordinates for each unique truncate
 
 #### library_enum_lists
 - `diversity_96_96.csv`: list of 96 diversity-selected primary amine and carboxylic acid BBs
