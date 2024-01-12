@@ -1,7 +1,9 @@
+import matplotlib.pyplot as plt
 import numpy as np
-from scipy.spatial.distance import euclidean
-from rdkit import Chem, SimDivFilters, DataStructs
 from openeye import oechem
+import pandas as pd
+from rdkit import Chem, DataStructs, SimDivFilters
+from scipy.spatial.distance import euclidean
 
 
 def uniform_sampling(df, cutoff, seed):
@@ -67,7 +69,6 @@ def lib_enum(pamine_selection, cooh_selection):
     libgen = oechem.OELibraryGen('[#6:1][N:2]([H:3])[H:4].[#6:10](=[O:11])[O:12][H:13]>>[#6:1][N:2]([H:3])[#6:10](=[O:11])')
 
     products = []
-    tracker = {}
     for i in range(len(pamine_selection)):
         for j in range(len(cooh_selection)):
             pamine_bb = pamine_selection['BB_SMILES'].iloc[i]
@@ -81,15 +82,11 @@ def lib_enum(pamine_selection, cooh_selection):
             oechem.OEParseSmiles(mol, cooh_bb)
             libgen.SetStartingMaterial(mol, 1)
 
-            k = 0
             for index, product in enumerate(libgen.GetProducts()):
                 if index == 0:
                     smi = oechem.OECreateCanSmiString(product)
                     products.append(smi)
-                    k += 1
-
-            tracker[f'({i},{j})'] = k
-    return products, tracker
+    return products
 
 def sim_mat(ref_df, test_df):
     sim_matrix = np.zeros((len(ref_df), len(test_df)), dtype=np.float32)
@@ -98,6 +95,15 @@ def sim_mat(ref_df, test_df):
             sim_matrix[i,j] = DataStructs.TanimotoSimilarity(ref,test)
     np.fill_diagonal(sim_matrix, 0)
     return sim_matrix
+
+def calc_pcp(library):
+    library['mol'] = library['SMILES'].apply(Chem.MolFromSmiles)
+    library['mw'] = library['mol'].apply(Chem.Descriptors.MolWt)
+    library['xlogp'] = library['mol'].apply(Chem.Descriptors.MolLogP)
+    library['tpsa'] = library['mol'].apply(Chem.Descriptors.TPSA)
+    library['hbd'] = library['mol'].apply(Chem.rdMolDescriptors.CalcNumHBD)
+
+    return library
 
 def plot_library_stats(pamine_sele_1, cooh_sele_1, lib1, lib1_label=None,
                  pamine_sele_2=None, cooh_sele_2=None, lib2=None, lib2_label=None,
