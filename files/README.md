@@ -17,6 +17,5 @@
 - `cooh_w_truncates.sdf`: catalog file with truncated versions of carboxylic acid building blocks
 
 #### library_enum_lists
-- `diversity_96_96.csv`: list of 96 diversity-selected primary amine and carboxylic acid BBs
-- `uniform_192_192.csv`: list of 192 uniformly selected primary amine and carboxylic acid BBs
-- `random_288_288.csv`: list of 288 randomly selected primary amine and carboxylic acid BBs
+- `pamine_{selection}_{size}.csv`: list of {size} primary amine BBs chosen using a {selection} strategy
+- `cooh_{selection}_{size}.csv`: list of {size} carboxylic acid BBs chosen using a {selection} strategy 
