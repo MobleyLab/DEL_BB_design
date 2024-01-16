@@ -5,6 +5,22 @@ from rdkit import Chem, DataStructs
 from rdkit.Chem import AllChem
 
 def run_2D_dist(ref, test, output):
+    '''
+    Calculates chemical distance, which we define as 1 - 2D Tanimoto similarity, between a set reference and test set compounds.     For a symmetric output distance matrix, the reference and test sets should be the same. 
+    
+    Inputs
+    ------
+    ref : str
+        filename of csv file containing reference set list of truncate SMILES
+    test : str
+        filename of csv file containing test set list of truncate SMILES
+
+    Outputs
+    -------
+    output.npy : array
+        NumPy array of shape (ref, test) where each element is the distance between a compound in the reference set 
+        and a compound in the test set. 
+    '''
     ref_df = pd.read_csv(ref)
     test_df = pd.read_csv(test)
 
