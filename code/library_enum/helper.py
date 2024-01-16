@@ -65,10 +65,22 @@ def diversity_selection(df, N, seed):
     ind = [x for x in picks]
     return df.iloc[ind]
 
+def has_pg(compound_SMILES, pg):
+    '''
+    Returns True if the SMILES string contains the protecting group of interest
+    '''
+    ss = oechem.OESubSearch(pg)
+    mol = oechem.OEGraphMol()
+    oechem.OESmilesToMol(mol, compound_SMILES)
+    oechem.OEPrepareSearch(mol, ss)
+    return ss.SingleMatch(mol)
+
 def lib_enum(pamine_selection, cooh_selection):
     libgen = oechem.OELibraryGen('[#6:1][N:2]([H:3])[H:4].[#6:10](=[O:11])[O:12][H:13]>>[#6:1][N:2]([H:3])[#6:10](=[O:11])')
 
     products = []
+    # Pattern to filter out products when amide reacts with carboxylic acid
+    match = 'C([NH]C=O)=O'
     for i in range(len(pamine_selection)):
         for j in range(len(cooh_selection)):
             pamine_bb = pamine_selection['BB_SMILES'].iloc[i]
@@ -83,8 +95,8 @@ def lib_enum(pamine_selection, cooh_selection):
             libgen.SetStartingMaterial(mol, 1)
 
             for index, product in enumerate(libgen.GetProducts()):
-                if index == 0:
-                    smi = oechem.OECreateCanSmiString(product)
+                smi = oechem.OECreateCanSmiString(product)
+                if not has_pg(smi, match):
                     products.append(smi)
     return products
 
